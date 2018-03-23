@@ -1,0 +1,3 @@
+#!/usr/bin/with-contenv sh
+
+sh $DB_CONF/run.sh

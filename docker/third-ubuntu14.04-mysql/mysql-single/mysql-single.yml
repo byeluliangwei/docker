@@ -1,0 +1,12 @@
+version: '2'
+services: 
+    mysql:
+      hostname: mysql
+      image: reg.signit.cn:5000/third/ubuntu14.04-mysql
+      #build: /home/s2/mysql-single/Dockerfile
+      ports:
+           - "3306:3306"  
+      volumes:
+           - /data/mysql:/var/lib/mysql
+           - /data/mysql/log:/var/log/mysql
+      stdin_open: true

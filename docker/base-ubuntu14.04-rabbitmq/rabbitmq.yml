@@ -1,0 +1,14 @@
+version: '2'
+
+services:
+   rabbitmq-server:
+      command: rabbitmq-start
+      image: reg.signit.cn:5000/third/ubuntu14.04-rabbitmq:3.7.x 
+      volumes: 
+        - /data/rabbitmq:/data/rabbitmq
+      ports:
+        - "15672:15672"
+        - "5672:5672"
+        - "61613:61613"
+      restart: always
+      stdin_open: true

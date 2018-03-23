@@ -1,0 +1,54 @@
+version: '2'
+services: 
+  mongodb_rs_3:
+      hostname: mongo3
+      image: reg.signit.cn:5000/third/ubuntu14.04-mongodb-rs
+      environment: 
+           - AS_PRIMARY=no
+           - AUTH=yes
+           - REPL_SET_ID=1
+           - REPL_SET_HOST=mongodb-rs.ns.me
+           - REPL_SET_PORT=27019
+      ports:
+           - "27019:27019"
+      volumes:
+           - /data/mongodb/3:/data/mongodb
+           - /etc/hosts:/etc/hosts
+      restart: always
+      stdin_open: true
+  mongodb_rs_2:
+      hostname: mongo2
+      image: reg.signit.cn:5000/third/ubuntu14.04-mongodb-rs
+      environment: 
+           - AS_PRIMARY=no
+           - AUTH=yes
+           - REPL_SET_ID=2
+           - REPL_SET_HOST=mongodb-rs.ns.me
+           - REPL_SET_PORT=27018
+      ports:
+           - "27018:27018"
+      volumes:
+           - /data/mongodb/2:/data/mongodb
+           - /etc/hosts:/etc/hosts
+      restart: always
+      stdin_open: true
+  mongodb_rs_1:
+      hostname: mongo1
+      image: reg.signit.cn:5000/third/ubuntu14.04-mongodb-rs
+      environment: 
+           - AS_PRIMARY=yes
+           - AUTH=yes
+           - REPL_SET_ID=3
+           - REPL_SET_HOST=mongodb-rs.ns.me
+           - REPL_SET_PORT=27017
+      ports:
+           - "27017:27017"
+      volumes:
+           - /data/mongodb/1:/data/mongodb
+           - /etc/hosts:/etc/hosts
+      restart: always
+      stdin_open: true
+      links: 
+           - mongodb_rs_2
+           - mongodb_rs_3
+      #mongo 172.26.0.10 --eval "rs.initiate(); myconf = rs.conf(); myconf.members[0].host = '172.26.0.10'; rs.reconfig(myconf,{force:true}); rs.add('172.26.0.11'); rs.add('172.26.0.12');"
