@@ -1,0 +1,17 @@
+#!/bin/sh
+/usr/bin/mysql_install_db --user=mysql --datadir=/var/lib/mysql --basedir=/usr
+
+/etc/init.d/mysql start
+mysql -e "DELETE FROM mysql.user WHERE user = ''" 
+mysql -e "GRANT ALL ON *.* TO 'signitsql'@'%' IDENTIFIED BY '@~mysql@signit@iskey!' WITH GRANT OPTION"
+mysql -e "GRANT REPLICATION SLAVE ON *.* TO 'signitsqlRepl'@'%' IDENTIFIED BY '@~mysql@signit@iskey!'"
+mysql -e "GRANT SELECT, SHOW DATABASES, SUPER, REPLICATION CLIENT, PROCESS ON *.* TO 'signitsqlMem'@'%' IDENTIFIED BY '@~mysql@signit@iskey!'"
+mysql -e "GRANT ALL ON *.* TO 'eSignServerSql'@'%' IDENTIFIED BY '@~mysql@signit@iskey!' WITH GRANT OPTION"
+/usr/bin/mysqladmin -u root password '&@~signit@root$Key!&'
+/etc/init.d/mysql stop
+
+sleep 10
+
+/usr/bin/mysqld_safe --user=mysql
+
+tail -f /var/log/mysql/error.log

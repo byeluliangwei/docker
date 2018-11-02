@@ -1,0 +1,58 @@
+version: '2'
+networks:
+  mongo_rs_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+      - subnet: 172.26.0.0/16
+        gateway: 172.26.0.1
+      - subnet: 2001:3984:3989::/64
+        gateway: 2001:3984:3989::1
+services: 
+  mongodb_rs_3:
+      hostname: mongo3
+      image: 114.215.149.118:5000/signit/signit-server-mongodb-rs
+      ports:
+           - "27019:27017"
+           - "28019:28017"                
+      volumes:
+           - /data/mongodb/3:/data/mongodb
+      restart: always
+      stdin_open: true
+      networks:
+          mongo_rs_net:
+             ipv4_address: 172.26.0.12
+             ipv6_address: 2001:3984:3989::12
+  mongodb_rs_2:
+      hostname: mongo2
+      image: 114.215.149.118:5000/signit/signit-server-mongodb-rs
+      ports:
+           - "27018:27017"
+           - "28018:28017"                
+      volumes:
+           - /data/mongodb/2:/data/mongodb
+      restart: always
+      stdin_open: true
+      networks:
+          mongo_rs_net:
+             ipv4_address: 172.26.0.11
+             ipv6_address: 2001:3984:3989::11
+  mongodb_rs_1:
+      hostname: mongo1
+      image: 114.215.149.118:5000/signit/signit-server-mongodb-rs
+      ports:
+           - "27017:27017"
+           - "28017:28017"           
+      volumes:
+           - /data/mongodb/1:/data/mongodb
+      restart: always
+      stdin_open: true
+      networks:
+          mongo_rs_net:
+             ipv4_address: 172.26.0.10
+             ipv6_address: 2001:3984:3989::10  
+      links: 
+           - mongodb_rs_2
+           - mongodb_rs_3
+      #mongo 172.26.0.10 --eval "rs.initiate(); myconf = rs.conf(); myconf.members[0].host = '172.26.0.10'; rs.reconfig(myconf,{force:true}); rs.add('172.26.0.11'); rs.add('172.26.0.12');"

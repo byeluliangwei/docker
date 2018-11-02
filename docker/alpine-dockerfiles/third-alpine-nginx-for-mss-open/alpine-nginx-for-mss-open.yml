@@ -1,0 +1,14 @@
+version: '2'
+
+services:
+     alpine-nginx-for-mss-open: 
+       image: "reg.signit.cn:5000/third/alpine-nginx-for-mss-open"
+       build: .
+       volumes: 
+         - "/etc/hosts:/etc/hosts"
+#         - "/etc/nginx/conf.d:/etc/nginx/conf.d"
+       ports: 
+#         - "80:80"
+         - "443:443"
+       restart: always
+       stdin_open: true

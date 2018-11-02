@@ -1,0 +1,26 @@
+version: '2'
+networks:
+  mongo_rs_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+      - subnet: 172.26.0.0/16
+        gateway: 172.26.0.1
+      - subnet: 2001:3984:3989::/64
+        gateway: 2001:3984:3989::1
+services: 
+  mongodb-rs-1:
+      hostname: mongo1
+      image: 114.215.149.118:5000/signit/signit-server-mongodb-rs
+      ports:
+           - "27017:27017"
+           - "28017:28017"           
+      volumes:
+           - /data/mongodb/1:/data/mongodb
+      restart: always
+      stdin_open: true
+      networks:
+          mongo_rs_net:
+             ipv4_address: 172.26.0.10
+             ipv6_address: 2001:3984:3989::10

@@ -1,0 +1,12 @@
+version: '2'
+
+services:
+     third-alpine-gitserver-http: 
+       image: "reg.signit.cn:5000/third/alpine-gitserver-http"
+       build: .
+       volumes: 
+         - /data/git-server/repos:/var/lib/git
+       ports: 
+         - "10080:80"
+       restart: always
+       stdin_open: true

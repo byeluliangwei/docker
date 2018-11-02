@@ -1,0 +1,15 @@
+version: '2'
+services:
+ svn:
+  image: reg.signit.cn:5000/third/alpine-svn
+  container_name: alpine_svn
+  hostname: alpine-svn
+  environment:
+    - DAV_SVN_USER=davsvnu
+    - DAV_SVN_PASS=davsvnp
+    - SVN_REPO=repo
+  ports:
+    - "3690:80"
+# volumes:
+#   - /path/volumes/svn:/var/svn
+  restart: always

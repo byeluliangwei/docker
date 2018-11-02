@@ -1,0 +1,15 @@
+#!/usr/bin/with-contenv sh
+
+# 初始化自定义的hosts文件
+init_hosts_path=/tmp/hosts
+if [ -e "$init_hosts_path" ]; then 
+   echo "[signit.cn] initial customized hosts in '$init_hosts_path'"
+   cp /etc/hosts /etc/hosts.bak
+   cat $init_hosts_path >> /etc/hosts
+   rm $init_hosts_path
+else
+   echo "[signit.cn] service starting..."
+fi 
+
+# 启动服务
+java -jar ${SERVER_BIN} --spring.profiles.active=${SERVER_PROFILE}

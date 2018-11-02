@@ -1,0 +1,12 @@
+version: '2'
+services:
+  registry:
+     #images: 118.190.87.51:5000/signit-registry
+     build: .
+     volumes: 
+        - "/data/registry:/var/lib/registry"
+     ports:
+        - "5000:5000"
+     restart: always
+     stdin_open: true
+     

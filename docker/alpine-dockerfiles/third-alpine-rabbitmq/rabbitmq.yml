@@ -1,0 +1,16 @@
+version: '2'
+
+services:
+   rabbitmq-server:
+      command: rabbitmq-start
+      image: 10.164.10.154:5000/signit/cloudsign-server-rabbitmq 
+      volumes: 
+        - /data/rabbitmq:/data/rabbitmq
+      ports:
+        - "15672:15672"
+        - "10.46.212.65:5672:5672"
+        - "10.46.212.65:61613:61613"
+      restart: always
+      stdin_open: true  
+             
+                         

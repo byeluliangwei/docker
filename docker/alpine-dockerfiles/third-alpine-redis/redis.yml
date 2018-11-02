@@ -1,0 +1,10 @@
+version: '2'
+services: 
+    redis:
+      image: 114.215.149.118:5000/signit/cloudsign-server-redis
+      ports:
+           - "6379:6379"  
+      volumes:
+           - /data/redis:/data/redis
+      stdin_open: true
+
