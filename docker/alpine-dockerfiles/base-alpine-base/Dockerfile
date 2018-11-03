@@ -1,12 +1,12 @@
-# IMAGES REPOSITORY   reg.signit.cn:5000/base/alpine-base
+# IMAGES REPOSITORY   registry.cn-hangzhou.aliyuncs.com/luliangwei/alpine:s6-overlay
 # DESCRIPTION         安装S6进程管理工具
 # VERSION             1.0.0
 
 # 使用此alpine基础镜像开始构建
-FROM reg.signit.cn:5000/base/alpine 
+FROM registry.cn-hangzhou.aliyuncs.com/luliangwei/alpine:base
 
 # 指定镜像创建者和联系方式
-MAINTAINER RyanChang zhd@signit.cn
+MAINTAINER luliangwei luliangwei1874@163.com
 
 # 添加s6-overlay进程管理工具
 ENV S6_OVERLAY_VERSION 			v1.19.1.1
